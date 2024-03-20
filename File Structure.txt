@@ -1,0 +1,240 @@
+BucHunt-Master
+	//Folder
+	ScavengeRUs
+		//Folder
+		ScavengeRUS.db-wal
+			//Write ahead logging file
+			A file that allows multiple edits to be handled at once. A part of the SQLite functionality. See documentation for more details. 
+		ScavengeRUS.db-shm
+			//Shared memory file
+			A block of memory used for WAL operations. See documentation for more details. 
+		ScavengRUS
+			//Data Base file
+			File containing the actual database, including data. Open with SQLite to see it. If you need more details, documentation is below.
+		appsetting.Development
+			//JSON
+			Subfile of appsettings containing the logging information
+		appsettings
+			//JSON
+			Contains various bits of information used by the program, including the email address. 
+		Program.cs
+			//C# Source file
+			Libraries:
+				Microsoft.AspNetCore.Identity
+				Microsoft.EntityFrameworkCore
+				ScavengeRUs.Data
+				ScavengeRUs.Models.Entities
+				ScavengeRUs.Services
+				Microsoft.AspNetCore.Http
+			Sets up the program and runs it. This is the starting point of the application.
+		Readme
+			//Text Document
+			Old read me, just says where to find HTML and formatting stuff, and how to access the database. 
+			To make your life easier: 
+				HTML is in Views
+				CSS, images, and Javascript are all in wwwroot
+				Use SQLite to look at the database (sqlitebrowser.org)
+		ScavengeRUs.csproj
+			//VS file
+		obj
+			//Folder
+			staticwebassets.pack.sentinel
+				//Sentinel File
+			project.assets
+				//JSON
+			project.nuget.cache
+				//CACHE file
+			ScavengeRUs.csproj.nuget.dgspec
+				//JSON
+			ScavengeRUs.csproj.nuget.g.props
+				//Project Property file
+			ScavengeRUs.scproj.nuget.g.targets
+				//Project Targets file
+			Debug
+				//Folder
+				net6.0
+					//Folder
+					ScavengeRUs.csproj.BuildWithSkipAnalyzers
+						//Build file
+					_IsIncrementalBuild
+						//File
+					ScavengeRUs.csproj.CopyComplete
+						//Copy Complete file
+					ScavengeRUs.csproj.FileListAbsolute
+						//Text document
+					ScavengeRUs.genruntimeconfig.cache
+						//CACHE file
+					apphost
+						//Application
+					ScavengeRUs.dll
+						//Application extension
+					ScavengeRUs.pdb
+						//Program Debug Document
+					staticwebassets.build
+						//JSON
+					staticwebassets.development
+						//JSON
+					ScavengeRUs.csproj.CoreCompileInputs.cache
+						//CACHE file
+					
+		bin
+			//Folder
+		wwwroot
+			//Folder
+		Services
+			//Folder
+			Functions.cs
+				//C# source file
+				Contains useful functions, including email sending
+			IUserRepository.cs
+				//C# source file
+				Libraries:
+					Microsoft.AspNetCore.Mvc
+					ScavengeRUs.Models.Entities
+			UserRepository.cs
+				//C# source file
+				Libraries:
+					Microsoft.AspNetCore.Identity
+					Microsoft.AspNetCore.Mvc
+					Microsoft.EntityFrameworkCore
+					Microsoft.EntityFrameworkCore.Metadata.Conventions
+					ScavengeRUs.Data
+					ScavendeRUs.Models.Entities
+					System.Security.Claims
+			ApplicationDbContext.cs
+				//C# source file
+				Libraries: 
+					Microsoft.AspNetCore.Identity
+					Microsoft.AspNetCore.Identity.EntityFrameworkCore
+					Microsoft.EntityFrameworkCore
+					ScavengeRUs.Models.Entities
+			HuntRepository.cs
+				//C# source file
+				Libraries:
+					Microsoft.AspNetCore.Mvc
+					Microsoft.EntityFrameworkCore
+					ScavengeRUs.Data
+					ScavengeRUs.Model.Entities
+					System.Runtime.InteropServices
+			IHuntRepository.cs
+				//C# source file
+				Libraries:
+					ScavengeRUs.Models.Entities
+		Views
+			//Folder
+		Controllers
+			//Folder
+			HomeController.cs
+				//C# source file
+			HuntController.cs
+				//C# source file
+			LocationsController.cs
+				//C# source file
+			QuestionsController.cs
+				//C# source file
+			UserController.cs
+				//C# source file
+				Libraries: 
+					Microsoft.AspNetCore.Authorization
+					Microsoft.AspNetCore.Identity
+					Microsoft.AspNetCore.Mvc
+					ScavengeRUs.Models.Entities
+					ScavengeRUs.Services	
+					System
+					System.Security.Claims
+				Admin only controller, handles admin portal functions
+		Data
+			//Folder
+			Migrations
+				//Folder
+		Models
+			//Folder
+			ErrorViewModel.cs
+				//C# source file
+			Entities
+				//Folder
+				AccessCode.cs
+					//C# source file
+				ApplicationUser.cs
+					//C# source file
+				Hunt.cs
+					//C# source file
+				HuntLocation.cs
+					//C# source file
+				Location.cs
+					//C# source file
+			Enums
+				//Folder
+				Roles.cs
+					//C# source file
+		Properties
+			//Folder
+		.config
+			//Folder
+			Hold the config file for .NET
+			dotnet-tools.json
+				//JSON
+				Short file that lists some configurations for .NET
+		Areas
+			//Folder
+			Identity
+				//Folder
+				Pages
+					//Folder
+					Account
+						//Folder
+						Login.cshtml.cs
+							//C# source file
+						Register.cshtml.cs
+							//C# source file
+					_ValidationScriptsPartial.cshtml
+					_ViewImports.cshtml
+					_ViewStart.cshtml
+	.gitattributes
+	.gitignore
+	azurepipeline.yml
+	database.md
+		//md file
+		Contains somewhat out of date information about the database. It was done before us
+	Planning
+		//Text document
+	Problems I Have Faced in the Buc Hunt Project
+	README
+	ScavengeRUs.sln
+	Documentation
+		//Folder
+		Server_Documentationupdated
+		databaseimage
+		Publishing_the_project
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+For what we can tell, the majority of the project is build on ASP. We are not versed in
+ASP, as you may be able to tell. If you look in the database, each table is linked to a specific C# class that is effectively the layout for that table.
+
+Library Documentation:
+
+AspNetCore.Authorization: https://learn.microsoft.com/en-us/aspnet/core/security/authorization/introduction?view=aspnetcore-7.0
+
+AspNetCore.Identity: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-7.0&tabs=visual-studio 
+
+AspNetCore.Identity.EntityFrameworkCore: See above
+
+AspNetCore.Mvc: https://learn.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-7.0
+
+EntityFrameworkCore: https://learn.microsoft.com/en-us/ef/core/
+
+EntityFrameworkCore.Metadata.Conventions: https://learn.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.conventions?view=efcore-6.0
+
+System: https://learn.microsoft.com/en-us/dotnet/api/system?view=net-8.0
+
+System.Runtime.InteropServices: https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices?view=net-7.0
+
+System.Security.Claims: https://learn.microsoft.com/en-us/dotnet/api/system.security.claims?view=net-7.0 
+
+Format Documentation: 
+
+SQLite DB format: https://www.sqlite.org/fileformat2.html 
+
+SQLite WAL format: https://www.sqlite.org/wal.html 
+
+SQLite SHM format: https://www.sqlite.org/tempfiles.html 
