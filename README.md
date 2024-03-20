@@ -5,8 +5,11 @@ This READ ME document serves as a starting place to begin you Scrum project for 
   - Trello link includes our tasks that have been completed each Scrum sprint shown in Sprint completed items panels as well as incompleted items in the overall backlog panel. Each task panel includes important notes.
   - The two discord links are to see our discussions and to reach out to the past semesters members. "SE1 Project Team" is the previous groups discord & "Overall Discord" includes all previous SE1 group memebers for this project.
 
+### Spring 2024 Documentation (Spring 2024)
 
-### Useful Links to Documentation:
+[Team 1 Solutions Discord](https://discord.gg/BjDAWpp7Fq)
+
+### Previous Documentation (Before Spring 2024)
 
 [Code Sctructure Doc](https://github.com/adverseengineer/ScavengeRUs/blob/sprint4/Documentation/Code%20Structure%20Documentation.docx) - Documentation on How BucHunt Code is Structured.
 
