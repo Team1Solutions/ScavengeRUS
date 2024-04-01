@@ -363,9 +363,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 #edit on 11/1/2023 by Nick Sells: ignore the database itself and its related files
-*.db
-*.db-shm
-*.db-wal
+
 
 #edit on 11/25/2023 by Grant Scutt: add rule to ignore gmail.txt file
 gmail.txt
