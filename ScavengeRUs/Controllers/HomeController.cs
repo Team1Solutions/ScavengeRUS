@@ -9,6 +9,8 @@ using System.Diagnostics;
 
 namespace ScavengeRUs.Controllers
 {
+// Abigayle's comment test.
+
     public class HomeController : Controller
     {
         private readonly SignInManager<ApplicationUser> _signInRepo;
