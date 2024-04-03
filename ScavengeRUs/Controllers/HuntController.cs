@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ScavengeRUs.Models.Entities;
 using ScavengeRUs.Services;
@@ -230,9 +230,9 @@ namespace ScavengeRUs.Controllers
                 RedirectToAction("Index");
             }
             var hunt = await _huntRepo.ReadAsync(huntId);
-            var existingUser = await _userRepo.ReadAsync(user.Email);
-            var newUser = new ApplicationUser();
-            if (existingUser == null)
+            var existingUser = await _userRepo.ReadAsync(user.Email); //Checks to see if the user is already registerd with the entered email
+            var newUser = new ApplicationUser();        //Creates new ApplicationUser Object
+            if (existingUser == null)                   //Creates the new user if they don't exist
             {
                 newUser.Email = user.Email;
                 newUser.PhoneNumber = user.PhoneNumber;
@@ -241,23 +241,23 @@ namespace ScavengeRUs.Controllers
                 newUser.AccessCode = user.AccessCode;
                 newUser.UserName = user.Email;
             }
-            else
+            else                                        //If the user exists it gets their info and puts it in new user
             {
                 newUser = existingUser;
                 newUser.AccessCode = user.AccessCode;
             }
             if (newUser.AccessCode!.Code == null)       //If the admin didn't specify an access code (If we need to, I have the field readonly currently)
             {
-                newUser.AccessCode = new AccessCode()
+                newUser.AccessCode = new AccessCode()   //Creates new AccessCode object 
                 {
                     Hunt = hunt,                        //Setting foriegn key
-                    Code = $"{newUser.PhoneNumber}/{hunt.HuntName!.Replace(" ", string.Empty)}",            //This is the access code generation
+                    Code = $"{newUser.PhoneNumber}/{hunt.HuntName!.Replace(" ", string.Empty)}", //This is the access code generation
                 };
                 newUser.AccessCode.Users.Add(newUser);  //Setting foriegn key
             }
             else
             {
-                newUser.AccessCode = new AccessCode()
+                newUser.AccessCode = new AccessCode()   // Create new AccessCode object 
                 {
                     Hunt = hunt,
                     Code = newUser.AccessCode.Code,
@@ -272,7 +272,7 @@ namespace ScavengeRUs.Controllers
             if(hunt.InvitationBodyText is not null)
             {
                 var userStr = hunt.InvitationBodyText.Replace("%user", $"{newUser.FirstName} {newUser.LastName}");
-                emailBody = userStr.Replace("%code", $"{newUser.AccessCode.Code}");
+                emailBody = userStr.Replace("%code", $"{newUser.AccessCode.Code}"); //The access code is emailed to the user
             }
             await _huntRepo.AddUserToHunt(huntId, newUser); //This methods adds the user to the database and adds the database relationship to a hunt.
 
