@@ -51,5 +51,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}/{taskid?}/{answer?}");
 app.MapRazorPages();
-
+// This runs the application - YL
 app.Run();
