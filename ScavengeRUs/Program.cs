@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Services can let you add on security measures to the program - TW
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 
