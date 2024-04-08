@@ -139,8 +139,9 @@ namespace ScavengeRUs.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Location == null)
+            {
                 return Problem("Entity set 'ApplicationDbContext.Location'  is null.");
-            
+            }
             var location = await _context.Location.FindAsync(id);
             if (location != null)
             {
