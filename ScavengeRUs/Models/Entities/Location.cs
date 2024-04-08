@@ -35,4 +35,9 @@ namespace ScavengeRUs.Models.Entities
         public string? AccessCode { get; set; }
 
         // An optional QR code associated
-
+        [Display(Name = "QR Code")]
+        public string? QRCode { get; set; }
+        public string? Answer { get; set; }
+        public ICollection<HuntLocation> LocationHunts { get; set; } = new List<HuntLocation>();
+    }
+}
