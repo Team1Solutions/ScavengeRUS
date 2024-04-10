@@ -268,6 +268,11 @@ namespace ScavengeRUs.Controllers
             //Set default value for email body
             string emailBody = $"<div>Hi {newUser.FirstName} {newUser.LastName} welcome to the ETSU Scavenger Hunt game! " +
                    $"To get started please go to the BucHunt website and login with the access code: {newUser.AccessCode.Code}</div>";
+
+ 	    // was running into a bug where the text whould not include the full message and would leave out part of the access code
+            // not sure why the text was limitting the number of characters allowed
+            // solution was to make a specific value for the text body
+            string textBody = $"Access Code: {newUser.AccessCode.Code}";
             
             if(hunt.InvitationBodyText is not null)
             {
@@ -283,7 +288,7 @@ namespace ScavengeRUs.Controllers
             //Nick Sells, 11/29/2023: get this value from the user, instead of just hardcoding in verizon
             //we have hard coded in verizon because thats what we all have
             newUser.Carrier = Models.Enums.Carrier.Verizon;
-            await Functions.SendSMS(newUser.Carrier, newUser.PhoneNumber, $"{subject}\n{emailBody}");
+            await Functions.SendSMS(newUser.Carrier, newUser.PhoneNumber, $"{subject}\n{textBody}");
             return RedirectToAction("Index");
         }
 
