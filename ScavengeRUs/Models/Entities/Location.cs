@@ -1,38 +1,41 @@
-// Import necessary namespaces for data annotations and handling.
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-// Define the namespace for the models of ScavengeRUs application.
 namespace ScavengeRUs.Models.Entities
 {
-    // Represents a Location entity within the application.
+    /// <summary>
+    /// This is the object for a specific Location. This table holds the name of the location (Place)
+    /// and a Question (Task) for that location. It will be displayed when the user reaches the actual
+    /// hunt part of the site
+    /// </summary>
     public class Location
     {
-        // Unique identifier for the Location entity.
+        /// <summary>
+        /// This is the primary key for a location aka task when creating a location aka task outside of 
+        /// a hunt it works fine when a task is created inside a hunt it crashes because it
+        /// inserts the hunt id as the location id 
+        /// </summary>
         [Key]
         public int Id { get; set; }
-        
-        // The name of the place, required field.
         [Required]
         public string Place { get; set; } = string.Empty;
-        
-        // Latitude of the location, required field. Displayed as "Latitude" in UI.
         [Required]
         [Display(Name = "Latitude")]
         public double? Lat { get; set; }
-        
-        // Longitude of the location, required field. Displayed as "Longitude" in UI.
         [Required]
         [Display(Name = "Longitude")]
         public double? Lon { get; set; }
-        
-        // A task or question associated with the location, required field.
         [Required]
         public string Task { get; set; } = string.Empty;
 
-        // An optional access code for entering or participating in the location's activity.
         [Display(Name = "Access Code")]
         public string? AccessCode { get; set; }
+        //public string? Completed { get; set; } // Shouldn't need this since it would set the task
+        //complete for everyone. The tasks need to be completed per user.
 
-        // An optional QR code associated
-
+        [Display(Name = "QR Code")]
+        public string? QRCode { get; set; }
+        public string? Answer { get; set; }
+        public ICollection<HuntLocation> LocationHunts { get; set; } = new List<HuntLocation>();
+    }
+}
