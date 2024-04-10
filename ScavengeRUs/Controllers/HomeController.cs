@@ -15,13 +15,7 @@ namespace ScavengeRUs.Controllers
         private readonly IUserRepository _userRepo;
         private readonly ILogger<HomeController> _logger;
 
-        ///This is my mark on the project, to verify Source Control works.
-        ///Feel free to delete once this has served its purpose.
-        ///Keillor Cogswell, 3/30/2024 at 8:27 PM
-
-
-
-        /// Abigayle's comment test.
+        
         /// <summary>
         /// </summary>
         /// <param name="logger"></param>

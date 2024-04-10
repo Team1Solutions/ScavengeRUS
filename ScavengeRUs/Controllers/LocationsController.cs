@@ -1,5 +1,4 @@
-// Necessary namespaces for the controller's functionality, including models, MVC features, authorization, and database context.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,15 +13,18 @@ using ScavengeRUs.Services;
 
 namespace ScavengeRUs.Controllers
 {
-    // The controller is protected with an authorization policy ensuring only users with the Admin role can access most of its actions.
+    //makes sure that only admin can see this page
     public class LocationsController : Controller
     {
-        // Dependencies injected into the controller include repositories for users and hunts, and the application's database context.
         private readonly IUserRepository _userRepo;
         private readonly IHuntRepository _huntRepo;
         private readonly ApplicationDbContext _context;
 
-        // Constructor injects the dependencies.
+        /// <summary>
+        /// This method injects the context into the class so that the methods can connect to
+        /// the database
+        /// </summary>
+        /// <param name="context"></param>
         public LocationsController(ApplicationDbContext context, IHuntRepository huntRepo, IUserRepository userRepo)
         {
             _userRepo = userRepo;
@@ -30,14 +32,24 @@ namespace ScavengeRUs.Controllers
             _context = context;
         }
 
-        // Displays a list of all locations. This action requires Admin role authorization.
+    
+        /// <summary>
+        /// This method maps to the /Locations URL. It shows the table
+        /// </summary>
+        /// <returns></returns>
+        /// 
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Location.ToListAsync());
+              return View(await _context.Location.ToListAsync());
         }
 
-        // Shows the details of a specific location identified by its Id. Requires Admin authorization.
+        
+        /// <summary>
+        /// This method shows the details of a specific location based on Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
@@ -51,14 +63,25 @@ namespace ScavengeRUs.Controllers
             return View(location);
         }
 
-        // Presents a form to create a new location. Requires Admin authorization.
+
+        /// <summary>
+        /// This is the page that will be shown when the admin want to create a new location from the 
+        /// website
+        /// </summary>
+        /// <returns></returns>
+        /// 
         [Authorize(Roles = "Admin")]
         public IActionResult Create([Bind(Prefix = "Id")] int huntid)
         {
             return View();
         }
 
-        // Processes the submission of a new location. If linked to a hunt, redirects to manage tasks for that hunt; otherwise, returns to the index. Requires Admin authorization.
+
+        /// <summary>
+        /// This method will be called when the admin submits the newly created location
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
@@ -76,7 +99,13 @@ namespace ScavengeRUs.Controllers
             return View(location);
         }
 
-        // Renders an edit form for a specific location. Requires Admin authorization.
+
+        /// <summary>
+        /// This is the page that will be shown when the admin attempts to edit a location
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// 
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -90,7 +119,14 @@ namespace ScavengeRUs.Controllers
             return View(location);
         }
 
-        // Handles the submission of edits to a location. Ensures data consistency and handles concurrency. Requires Admin authorization.
+        
+        /// <summary>
+        /// This method will be called when the admin submits the edit to the location from the previous
+        /// method
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="location"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
@@ -118,7 +154,12 @@ namespace ScavengeRUs.Controllers
             return View(location);
         }
 
-        // Shows a confirmation page for deleting a location. Requires Admin authorization.
+
+        /// <summary>
+        /// This page will be shown when the admin attempts to delete a location from the site
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -132,15 +173,21 @@ namespace ScavengeRUs.Controllers
             return View(location);
         }
 
-        // Confirms the deletion of a location and removes it from the database. Requires Admin authorization.
+
+        /// <summary>
+        /// This method will activate when the admin submits the delete action on a location
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Location == null)
+            {
                 return Problem("Entity set 'ApplicationDbContext.Location'  is null.");
-            
+            }
             var location = await _context.Location.FindAsync(id);
             if (location != null)
             {
@@ -151,27 +198,38 @@ namespace ScavengeRUs.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Validates whether a specific location exists in the database.
+        
+        /// <summary>
+        /// This method checks to make sure that a Location row exists in the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool LocationExists(int id)
         {
-            return _context.Location.Any(e => e.Id == id);
+          return _context.Location.Any(e => e.Id == id);
         }
 
-        // Validates a player's answer to a task associated with a location. This method supports both Admin and Player roles and is designed for AJAX calls.
+
+        /// <summary>
+        /// This method validates an answer for a task. Used by an AJAX call from the hunt page. See site.js
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="taskid"></param>
+        /// <param name="answer"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Admin, Player")]
         public async Task<IActionResult> ValidateAnswer([FromForm]int id, int taskid, string answer)
         {
-            var currentUser = await _userRepo.ReadAsync(User.Identity?.Name!);
-            var location = await _context.Location.FirstOrDefaultAsync(m => m.Id == taskid);
-            if (answer != null && answer.Equals(location?.Answer, StringComparison.OrdinalIgnoreCase))
+            var currentUser = await _userRepo.ReadAsync(User.Identity?.Name!);                              //gets current user
+            var location = await _context.Location.FirstOrDefaultAsync(m => m.Id == taskid);                //gets the task
+            if (answer != null && answer.Equals(location?.Answer, StringComparison.OrdinalIgnoreCase))      //check is answer matches
             {
-                currentUser?.TasksCompleted!.Add(location); // Update the player's completed tasks
-                await _context.SaveChangesAsync();
+                currentUser?.TasksCompleted!.Add(location); //Update the players completed tasks
+                await _context.SaveChangesAsync();          
                 return Json(new { success = true});
             }
             return Json(new { success = false });
         }
     }
 }
-
