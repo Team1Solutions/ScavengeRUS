@@ -264,12 +264,22 @@ namespace ScavengeRUs.Controllers
                 };
                 newUser.AccessCode.Users.Add(newUser);
             }
+
+            //value for the url that is inluded in the email
+            //change when solution is not running locally
+            string url = "https://localhost:7143/";
             
             //Set default value for email body
             string emailBody = $"<div>Hi {newUser.FirstName} {newUser.LastName} welcome to the ETSU Scavenger Hunt game! " +
-                   $"To get started please go to the BucHunt website and login with the access code: {newUser.AccessCode.Code}</div>";
-            
-            if(hunt.InvitationBodyText is not null)
+                   $"To get started please go to the BucHunt <a href={url}>website<a> and login with the access code: {newUser.AccessCode.Code}</div>";
+
+            //was running into an issue where the text whould not include the full message and would leave out part of the access code
+            //not sure why the sms was limitting the number of characters
+            //solution was to make a specific value for the text body
+            string textBody = $"Thank you for playing ScavengersRus: Your access code for {hunt.HuntName} is {newUser.AccessCode.Code}";
+
+
+            if (hunt.InvitationBodyText is not null)
             {
                 var userStr = hunt.InvitationBodyText.Replace("%user", $"{newUser.FirstName} {newUser.LastName}");
                 emailBody = userStr.Replace("%code", $"{newUser.AccessCode.Code}");
@@ -283,7 +293,7 @@ namespace ScavengeRUs.Controllers
             //Nick Sells, 11/29/2023: get this value from the user, instead of just hardcoding in verizon
             //we have hard coded in verizon because thats what we all have
             newUser.Carrier = Models.Enums.Carrier.Verizon;
-            await Functions.SendSMS(newUser.Carrier, newUser.PhoneNumber, $"{subject}\n{emailBody}");
+            await Functions.SendSMS(newUser.Carrier, newUser.PhoneNumber, textBody);
             return RedirectToAction("Index");
         }
 
