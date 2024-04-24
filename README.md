@@ -8,6 +8,7 @@ This READ ME document serves as a starting place to begin you Scrum project for 
 ### Spring 2024 Documentation (Spring 2024)
 
 [Team 1 Solutions Discord](https://discord.gg/BjDAWpp7Fq)
+[Team 1 Living Document] ()
 
 ### Previous Documentation (Before Spring 2024)
 
