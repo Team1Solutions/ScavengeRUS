@@ -10,6 +10,8 @@ This READ ME document serves as a starting place to begin you Scrum project for 
 [Team 1 Solutions Discord](https://discord.gg/BjDAWpp7Fq)
 [Team 1 Living Document] ()
 
+Our team focused on documenting and adding features from Tier 2 Task 3 which revolved around different methods of listing tasks.
+
 ### Previous Documentation (Before Spring 2024)
 
 [Code Sctructure Doc](https://github.com/adverseengineer/ScavengeRUs/blob/master/Documentation/Code%20Structure%20Documentation.docx) - Documentation on How BucHunt Code is Structured.
