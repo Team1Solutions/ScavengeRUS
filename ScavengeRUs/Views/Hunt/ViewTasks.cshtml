@@ -106,8 +106,17 @@
             <hr />
 
         }
+        
+         @{
+            @*
+                Randomizes the order that the tasks are displayed
+                Problem is that it is reordered every time the page is refresed
+            *@
+            var shuffletasks = Model.OrderBy(x => Guid.NewGuid()).ToList();
+        }
 
-        @foreach (var item in Model)
+        @* Uncomment shuffletasks to implement it *@
+        @foreach (var item in Model /*shuffletasks*/)
         {
             @* Admin can view answers to the tasks for the hunt, and don't need to complete the tasks *@
             @if(User.IsInRole("Admin"))
